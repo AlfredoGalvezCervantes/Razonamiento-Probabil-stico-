@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        // Lista de variables
+        List<string> variables = new List<string>
+        {
+            "Variable1",
+            "Variable2",
+            "Variable3",
+            "Variable4"
+        };
+
+        Console.WriteLine("Lista de variables original:");
+        ImprimirListaVariables(variables);
+
+        // Variable que deseamos eliminar
+        string variableAEliminar = "Variable3";
+
+        // Eliminar la variable
+        EliminarVariable(variables, variableAEliminar);
+
+        Console.WriteLine("\nLista de variables después de eliminar " + variableAEliminar + ":");
+        ImprimirListaVariables(variables);
+    }
+
+    static void EliminarVariable(List<string> listaVariables, string variable)
+    {
+        listaVariables.Remove(variable);
+    }
+
+    static void ImprimirListaVariables(List<string> listaVariables)
+    {
+        foreach (var variable in listaVariables)
+        {
+            Console.WriteLine(variable);
+        }
+    }
+}
