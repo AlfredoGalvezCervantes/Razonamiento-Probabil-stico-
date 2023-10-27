@@ -1,0 +1,32 @@
+using AgenaRisk;
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Crea una instancia de Network
+        Network network = new Network();
+
+        // Crea nodos en la red
+        Node fluNode = network.CreateNode("Flu");
+        Node coldNode = network.CreateNode("Cold");
+        Node feverNode = network.CreateNode("Fever");
+
+        // Establece las probabilidades para los nodos
+        fluNode.SetDefinition(new double[] { 0.1, 0.9 }); // Probabilidad de tener gripe
+        coldNode.SetDefinition(new double[] { 0.3, 0.7 }); // Probabilidad de tener resfriado
+        feverNode.SetDefinition(new double[] { 0.8, 0.2 }, coldNode); // Probabilidad de fiebre dado resfriado
+
+        // Actualiza la red para calcular las probabilidades
+        network.UpdateBeliefs();
+
+        // Consulta la probabilidad de tener fiebre dado que se tiene un resfriado
+        double probabilityFeverGivenCold = feverNode.GetBelief()[1];
+        Console.WriteLine("Probabilidad de tener fiebre dado que se tiene un resfriado: " + probabilityFeverGivenCold);
+
+        // Consulta la probabilidad de tener gripe
+        double probabilityFlu = fluNode.GetBelief()[0];
+        Console.WriteLine("Probabilidad de tener gripe: " + probabilityFlu);
+    }
+}
