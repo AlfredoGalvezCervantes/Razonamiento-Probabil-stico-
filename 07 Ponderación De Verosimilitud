@@ -1,0 +1,41 @@
+using System;
+using MathNet.Numerics;
+using MathNet.Numerics.Distributions;
+
+class Program
+{
+    static void Main()
+    {
+        // Datos de ejemplo
+        double[] datos = { 2.1, 2.8, 3.2, 4.0, 4.5 };
+        double mediaInicial = 3.0;
+        double desviacionEstandarInicial = 1.0;
+
+        // Estimación de máxima verosimilitud de la media y desviación estándar
+        double mediaEstimada, desviacionEstandarEstimada;
+
+        // Calcular la ponderación de verosimilitud
+        CalcularPonderacionVerosimilitud(datos, mediaInicial, desviacionEstandarInicial, out mediaEstimada, out desviacionEstandarEstimada);
+
+        Console.WriteLine("Estimación de Máxima Verosimilitud:");
+        Console.WriteLine("Media Estimada: " + mediaEstimada);
+        Console.WriteLine("Desviación Estándar Estimada: " + desviacionEstandarEstimada);
+    }
+
+    static void CalcularPonderacionVerosimilitud(double[] datos, double mediaInicial, double desviacionEstandarInicial, out double mediaEstimada, out double desviacionEstandarEstimada)
+    {
+        // Crear una distribución normal con los parámetros iniciales
+        Normal normal = new Normal(mediaInicial, desviacionEstandarInicial);
+
+        // Calcular la ponderación de verosimilitud (logaritmo de la función de verosimilitud)
+        double logLikelihood = 0.0;
+        foreach (var dato in datos)
+        {
+            logLikelihood += normal.LogProbability(dato);
+        }
+
+        // Estimar la media y la desviación estándar utilizando MLE
+        mediaEstimada = normal.Mean;
+        desviacionEstandarEstimada = normal.StdDev;
+    }
+}
