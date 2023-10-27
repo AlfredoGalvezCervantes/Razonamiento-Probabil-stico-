@@ -1,0 +1,46 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Definir una matriz de transición
+        double[,] matrizTransicion = {
+            {0.7, 0.3},  // Probabilidad de pasar de estado 0 a estado 0 o estado 1
+            {0.4, 0.6}   // Probabilidad de pasar de estado 1 a estado 0 o estado 1
+        };
+
+        // Estado inicial
+        int estadoActual = 0;
+
+        // Número de pasos o iteraciones
+        int numPasos = 10;
+
+        Console.WriteLine("Secuencia de estados de una cadena de Markov:");
+
+        for (int paso = 0; paso < numPasos; paso++)
+        {
+            Console.WriteLine("Paso " + paso + ": Estado " + estadoActual);
+            estadoActual = ProximoEstado(estadoActual, matrizTransicion);
+        }
+    }
+
+    static int ProximoEstado(int estadoActual, double[,] matrizTransicion)
+    {
+        Random random = new Random();
+        double probabilidad = random.NextDouble();
+        double acumulado = 0.0;
+
+        for (int estadoSiguiente = 0; estadoSiguiente < matrizTransicion.GetLength(1); estadoSiguiente++)
+        {
+            acumulado += matrizTransicion[estadoActual, estadoSiguiente];
+            if (probabilidad < acumulado)
+            {
+                return estadoSiguiente;
+            }
+        }
+
+        // En caso de error, devuelve el estado actual
+        return estadoActual;
+    }
+}
