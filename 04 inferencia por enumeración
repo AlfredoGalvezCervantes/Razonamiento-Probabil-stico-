@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        // Define la estructura de la red bayesiana
+        var redBayesiana = new Dictionary<string, double>
+        {
+            { "A", 0.3 },
+            { "B", 0.7 },
+            { "C", 0.8 }
+        };
+
+        // Calcula la probabilidad de A dado B y C utilizando inferencia por enumeración
+        double probabilidad = InferenciaPorEnumeracion(redBayesiana, "A", new List<string> { "B", "C" }, new List<string> { "B", "C" });
+
+        Console.WriteLine("La probabilidad de que A sea verdadero dado que B es verdadero y C es verdadero es: " + probabilidad);
+    }
+
+    static double InferenciaPorEnumeracion(Dictionary<string, double> redBayesiana, string nodoObjetivo, List<string> nodosObservados, List<string> valoresObservados)
+    {
+        double suma = 0.0;
+        double normalizador = 0.0;
+
+        foreach (var valorNodoObjetivo in new[] { "verdadero", "falso" })
+        {
+            double probabilidadConjunta = 1.0;
+
+            for (int i = 0; i < nodosObservados.Count; i++)
+            {
+                string nodo = nodosObservados[i];
+                string valor = valoresObservados[i];
+                probabilidadConjunta *= redBayesiana[nodo + valor];
+            }
+
+            probabilidadConjunta *= redBayesiana[nodoObjetivo + valorNodoObjetivo];
+            suma += probabilidadConjunta;
+        }
+
+        normalizador = 1.0 / suma;
+
+        return normalizador;
+    }
+}
