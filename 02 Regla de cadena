@@ -1,0 +1,34 @@
+using System;
+
+public class Funcion
+{
+    // Definimos una función y su derivada
+    public double Evaluar(double x)
+    {
+        return x * x;
+    }
+
+    public double Derivada(double x)
+    {
+        return 2 * x;
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        // Creamos una instancia de la clase Funcion
+        Funcion funcion = new Funcion();
+
+        // Punto en el que queremos evaluar la derivada
+        double x = 3.0;
+
+        // Calculamos la derivada de la función compuesta: g(f(x))
+        double resultado = funcion.Derivada(funcion.Evaluar(x));
+
+        Console.WriteLine("f(x) = x^2");
+        Console.WriteLine("f'(x) = 2x");
+        Console.WriteLine("g(f(x)) = " + resultado);
+    }
+}
