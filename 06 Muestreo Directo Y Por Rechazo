@@ -1,0 +1,17 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Random random = new Random();
+        int numMuestras = 10;
+
+        Console.WriteLine("Muestreo directo (Distribución uniforme entre 0 y 1):");
+        for (int i = 0; i < numMuestras; i++)
+        {
+            double muestra = random.NextDouble();
+            Console.WriteLine("Muestra " + (i + 1) + ": " + muestra);
+        }
+    }
+}
